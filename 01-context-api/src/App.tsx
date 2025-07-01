@@ -2,43 +2,31 @@ import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 import { useTodo } from './context/todo/todoContext'
 import Dashboard from './components/dashboard/Dashboard'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { FaMoon, FaSun } from 'react-icons/fa'
 
 const App = () => {
     const { todos } = useTodo()
     const [theme, setTheme] = useState('light')
 
-    useEffect(() => {
-        const storedTheme = localStorage.getItem('theme')
-        if (storedTheme === 'dark') {
-            document.documentElement.classList.add('dark')
-            setTheme('dark')
-        }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('theme', theme)
-    }, [theme])
-
-    const handleToggleTheme = () => {
-        const html = document.documentElement
-        if (theme === 'light') {
-            html.classList.add('dark')
-            setTheme('dark')
-        } else {
-            html.classList.remove('dark')
-            setTheme('light')
-        }
+    const toggleTheme = () => {
+        document.documentElement.classList.toggle('dark')
+        setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))
     }
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-4">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold">📝 Todos</h2>
                 <button
-                    onClick={handleToggleTheme}
-                    className="bg-gray-300 dark:bg-gray-700 px-4 py-2 rounded cursor-pointer"
+                    onClick={toggleTheme}
+                    className="bg-gray-300 dark:bg-gray-700 px-4 py-2 rounded-full cursor-pointer"
                 >
-                    Toggle Mode
+                    {theme === 'light' ? (
+                        <FaMoon size={24} color="var(--icon-color-light)" />
+                    ) : (
+                        <FaSun size={24} color="var(--icon-color-dark)" />
+                    )}
                 </button>
             </div>
 

@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid'
-import { useState } from 'react'
 import { useTodo, type ITodoShape } from '../context/todo/todoContext'
 import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
